@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+int func(int* arr, int size, int number)
+{
+	size = sizeof(arr);
+	number = --size;
+	float sum = 0;
+	for (int i = 0; i < 5; i++)
+	sum = sum + arr[i];
+	float ssum = sum / size;
+	if (number > ssum)
+		return fprintf_s(stdout, "Possition of last number > averede, so result  = %d\n", number);
+	else
+		return fprintf(stdout, "Possition of last number <= averede, so result = (-1)\n");
+}
+int func(char* str)
+{
+	register int leo = strlen(str);
+	int sum = 0;
+	for (int i = 0; i < leo; i++)
+		sum = sum + str[i];
+	int ssum = sum / leo;
+	if (leo > ssum)
+		return printf("Possition of last number > averede, so result = %d\n", leo);
+	else
+		return printf("Possition of last number <= averede, so result = (-1)\n");
+}
+int main()
+{
+	char str[] = "ABCDE";
+	static int arr[3] = {1,2,3};
+	func(arr, 3, 3);
+	func(str);
+}
