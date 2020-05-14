@@ -1,0 +1,146 @@
+Main
+#include <iostream>
+#include "CTV.h"
+using namespace std;
+
+int main()
+{
+    int choose, amount;
+    bool take;
+    CTV ctv;
+    do
+    {
+        cout << "Information(0)\nChange volume(1)\nChange channel(3)\nWatch(4)\nOnOff(5)\nExit(6)\n";
+        cin >> choose;
+        switch (choose)
+        {
+        case 0:
+            system("cls");
+            ctv.Information();
+            break;
+        case 1:
+            system("cls");
+            cout << "Enter amount: ";
+            cin >> amount;
+            ctv.ChangeVolume(amount);
+            break;
+        case 3:
+            system("cls");
+            cout << "Enter channel: ";
+            cin >> amount;
+            ctv.ChangeChannel(amount);
+            break;
+        case 4:
+            system("cls");
+            ctv.Watch();
+            break;
+        case 5:
+            system("cls");
+            cout << "OFF(0)\nON(1)\n";
+            cin >> take;
+            ctv.Put(take);
+            break;
+        case 6:
+            system("cls");
+            return 0;
+        default:
+            system("cls");
+            cout << "Enter corect!!!" << endl;
+            continue;
+        }
+    } while (true);
+    system("pause");
+    return 0;
+}
+
+Header
+#pragma once
+#include <iostream>
+#include <iomanip>
+using namespace std;
+class CTV
+{
+private:
+	int Volume, Resourse, NowChannel;
+	bool OnOff;
+	string Channels[6] = { "New Channel","ICTV","NlO TV","1+1","2+2","STB"};
+public:
+	CTV()
+	{
+		Volume = 0;
+		Resourse = 10;
+		NowChannel = 0;
+		OnOff = false;
+	}
+	~CTV() {};
+	CTV(int Volume, int Resourse, int NowChannel, bool OnOff)
+	{
+		this->Volume = Volume;
+		this->Resourse = Resourse;
+		this->NowChannel = NowChannel;
+		this->OnOff = OnOff;
+	}
+	void Information()
+	{
+		if (OnOff==false)
+		{
+			cout << "TV i off, no info\n\n";
+		}
+		else
+		{
+			cout << "Channel: " << NowChannel << endl << Channels[NowChannel] << "\nVolume: " << Volume << "\nResourses: " << Resourse << endl << endl;
+		}
+	}
+	void ChangeVolume(int i)
+	{
+		if (i>0)
+		{
+			if (Volume + i > 100)
+			{
+				Volume = 100;
+			}
+			else
+			{
+				Volume += i;
+			}
+		}
+		else
+		{
+			if (Volume + i < 0)
+			{
+				Volume = 0;
+			}
+			else
+			{
+				Volume -= i;
+			}
+		}
+
+	}
+	void ChangeChannel(int i)
+	{
+		if (i < 0 && i>5)
+		{
+			cout << "No such a channel\n\n";
+		}
+		else
+		{
+			NowChannel = i;
+		}
+	}
+	void Watch()
+	{
+		if (Resourse<0)
+		{
+			cout << "You have no resourses\n\n";
+		}
+		else
+		{
+			Resourse--;
+		}
+	}
+	void Put(bool choose)
+	{
+		OnOff = choose;
+	}
+};
