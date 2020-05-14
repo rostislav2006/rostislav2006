@@ -1,0 +1,109 @@
+#include <iostream>
+#include <iomanip>
+#include <Windows.h>
+#define w 10
+using namespace std;
+
+class CHuman
+{
+protected:
+	int height, weight;
+	char* Name;
+public:
+	CHuman(const char* Name, int height, int weight)
+	{
+		setInfo(Name, height, weight);
+	}
+	~CHuman()
+	{
+		delete[] Name;
+	}
+	void setInfo(const char* Name, int height, int weight)
+	{
+		this->Name = new char[strlen(Name) + 1];
+		strcpy_s(this->Name, strlen(Name) + 1, Name);
+		this->height = height;
+		this->weight = weight;
+	}
+	virtual void PrintInfo() = 0;
+};
+class CDiver : public CHuman
+{
+protected:
+	int oxygen;;
+public:
+	CDiver(const char* Name, int height, int weight, int oxygen) : CHuman(Name, height, weight)
+	{
+		setInfo(oxygen);
+	}
+	void setInfo(int oxygen)
+	{
+		this->oxygen = oxygen;
+	}
+	virtual void PrintInfo()
+	{
+		cout << "Diver info:" << endl;
+		cout << setw(w) << left << "Name: " << CHuman::Name << endl;
+		cout << setw(w) << left << "Height: " << CHuman::height << " sm" << endl;
+		cout << setw(w) << left << "Weight: " << CHuman::weight << " kg" << endl;
+		cout << setw(w) << left << "Oxygen: " << oxygen << endl;
+	}
+};
+class CSodier : public CHuman
+{
+protected:
+	int age;
+public:
+	CSodier(const char* Name, int height, int weight, int age) : CHuman(Name, height, weight)
+	{
+		setInfo(age);
+	}
+	void setInfo(int age)
+	{
+		this->age = age;
+	}
+	virtual void PrintInfo()
+	{
+		cout << "Sodier info:" << endl;
+		cout << setw(w) << left << "Name: " << CHuman::Name << endl;
+		cout << setw(w) << left << "Height: " << CHuman::height << " sm" << endl;
+		cout << setw(w) << left << "Weight: " << CHuman::weight << " kg" << endl;
+		cout << setw(w) << left << "Age: " << age << endl;
+	}
+};
+class SMilitaryDiver : public CDiver, public CSodier
+{
+public:
+	SMilitaryDiver(const char* Name, int height, int weight, int oxygen, int age) : CDiver(Name, height, weight, oxygen), CSodier(Name, height, weight, age)
+	{
+
+	}
+	virtual void PrintInfo()
+	{
+		cout << "MilitaryDiver info:" << endl;
+		cout << setw(w) << left << "Name: " << CHuman::Name << endl;
+		cout << setw(w) << left << "Height: " << CHuman::height << " sm" << endl;
+		cout << setw(w) << left << "Weight: " << CHuman::weight << " kg" << endl;
+		cout << setw(w) << left << "Oxygen: " << oxygen << endl;
+		cout << setw(w) << left << "Age: " << age << endl;
+	}
+};
+int main()
+{
+	CDiver Boxer1("Karl", 185, 70, 1200);
+	Boxer1.PrintInfo();
+
+	cout << endl << endl;
+
+	CSodier Kicker1("Brain", 175, 68, 35);
+	Kicker1.PrintInfo();
+
+	cout << endl << endl;
+
+	SMilitaryDiver KickBoxer1("Robert", 185, 75, 300, 24);
+	KickBoxer1.PrintInfo();
+
+	cout << endl;
+	system("pause");
+	return 0;
+}
