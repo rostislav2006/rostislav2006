@@ -1,0 +1,93 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+class Device
+{
+public:
+	Device(const char* set_Model)
+	{
+		Model = new char[strlen(set_Model) + 1];
+		strcpy(Model, set_Model);
+		Name = 0;
+	}
+	virtual ~Device()
+	{
+		if (Name != 0)
+		{
+			delete[] Name;
+		}
+		if (Model != 0)
+		{
+			delete[] Model;
+		}
+	}
+	virtual char* Mode() = 0;
+	virtual void setMode(bool k) = 0;
+	virtual bool Status()
+	{
+		return IsWork;
+	}
+public:
+	char* Name;
+	char* Model;
+	bool IsWork = 0;
+};
+class Recorder : public Device
+{
+public:
+	Recorder(const char* set_Model, const char* set_Name, int memory, string audioFormat) : Device(set_Model)
+	{
+		IsWork = 0;
+		Name = new char[strlen(set_Name) + 1];
+		strcpy(Name, set_Name);
+		this->Memory = memory;
+		this->audioFormat = audioFormat;
+	}
+	virtual ~Recorder()
+	{
+
+	}
+	virtual char* Mode()
+	{
+		char* curMode = new char[20];
+		if (mode == 0)
+		{
+			strcpy(curMode, "Pause");
+		}
+		else
+		{
+			strcpy(curMode, "Play");
+		}
+		return curMode;
+	}
+	virtual void setMode(bool k)
+	{
+		mode = k;
+	}
+	virtual int Get_Memory()
+	{
+		return Memory;
+	}
+	virtual string Get_Format()
+	{
+		return audioFormat;
+	}
+private:
+	int Memory = 0;
+	string audioFormat;
+	bool mode = 0;
+};
+int main()
+{
+	Recorder Rec("Samsung", "Rec1", 1024, "mp3");
+	Rec.setMode(1);
+	cout << "Model: " << Rec.Model << endl;
+	cout << "Name: " << Rec.Name << endl;
+	cout << "Memory amount: " << Rec.Get_Memory() << endl;
+	cout << "Current mode: " << Rec.Mode() << endl;
+	cout << "Audio format: " << Rec.Get_Format() << endl;
+	system("pause");
+	return 0;
+}
