@@ -1,0 +1,54 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+template <typename T>
+class MAtrix
+{
+private:
+	int size;
+	T* matrix, per=0;
+public:
+	MAtrix() {};
+	MAtrix(int size)
+	{
+		this->size = size;
+		matrix = new T[size];
+	}
+	~MAtrix()
+	{
+		delete[] matrix;
+	}
+	void Initialize()
+	{
+		cout << "Enter your digits: ";
+		for (int i = 0; i < size; i++)
+		{
+			cin >> matrix[i];
+		}
+	}
+	void SetSize(int size)
+	{
+		this->size = size;
+	}
+	void Sort()
+	{
+		for (int i = 0; i < size; i++)
+		{
+			if (i%2==1)
+			{
+				per += abs(matrix[i]);
+			}
+		}
+		cout << "Suma po moduly ne parnux: " << per << endl;
+	}
+};
+
+int main()
+{
+	MAtrix<double> matr(10);
+	matr.Initialize();
+	matr.Sort();
+	system("pause");
+	return 0;
+}
